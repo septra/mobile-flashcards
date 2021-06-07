@@ -30,20 +30,33 @@ export default function DeckList(props) {
   return (
     <View style={styles.container}>
       <Text>DeckList</Text>
-      {decks.map((deck) => (
-        <TouchableOpacity 
-          style={styles.item} 
-          onPress={() => props.navigation.navigate('Deck', {deckId: deck.id})}
-        >
-          <View key={deck.id}>
-                <Text>{deck.name}</Text>
-          </View>
-        </TouchableOpacity>
-      ))
+      {Object.keys(decks).map((deckName) => {
+        const deck = decks[deckName]
+        return (
+          <DeckListItem 
+            key={deck.title}
+            deck={deck}
+            linkTo={() => props.navigation.navigate('Deck', {deckId: deck.title})}
+          />
+        )
+      })
       }
     </View>
   )
 }
+
+function DeckListItem({ deck, linkTo }) {
+  return (
+    <TouchableOpacity 
+      style={styles.item} 
+      onPress={linkTo}
+    >
+        <Text>{deck.title}</Text>
+        <Text>Total Questions: {deck.questions.length}</Text>
+    </TouchableOpacity>
+  )
+}
+
 
 const styles = StyleSheet.create({
   container: {
