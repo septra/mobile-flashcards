@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   item: {
-    flex: 1,
-    height: 50,
+    height: 100,
     width: '90%',
     marginVertical: 10,
     backgroundColor: 'orange',
