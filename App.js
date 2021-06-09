@@ -8,6 +8,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import Deck from './components/Deck';
+import NewQuestion from './components/NewQuestion';
 
 const RouteConfigs = {
   DeckList:{
@@ -50,6 +51,10 @@ export default function App() {
         <Stack.Screen
           name="Deck"
           component={Deck}
+        />
+        <Stack.Screen
+          name="NewQuestion"
+          component={NewQuestion}
         />
       </Stack.Navigator>
     </NavigationContainer>
