@@ -1,19 +1,32 @@
-import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage, ShadowPropTypesIOS } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function Deck(props) {
+  const isFocussed = useIsFocused()
+  const [deck, setDeck] = useState({})
+  useEffect(() => {
+    AsyncStorage.getItem('mobile-flashcards')
+      .then(JSON.parse)
+      .then((data) => {
+        setDeck(data[props.route.params.deckId])
+      })
+  }, [isFocussed])
   return (
     <View style={styles.container}>
       <Text style={{alignSelf:'center'}}>
-        {props.route.params.deckId}
+        {deck.title}
+      </Text>
+      <Text style={{alignSelf:'center'}}>
+        Total Cards: {deck.questions && deck.questions.length}
       </Text>
       <Button text="Start Quiz"></Button>
-      <Button text="Add Question"></Button>
+      <Button text="Add Question" onPress={() => props.navigation.navigate('NewQuestion', {deckId: props.route.params.deckId})}></Button>
     </View>
   )
 }
 
-function Button({ onPress, text }) {
+export function Button({ onPress, text }) {
     return (
         <TouchableOpacity
             style={Platform.OS == 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
