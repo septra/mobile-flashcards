@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Text, View, SafeAreaView, TextInput } from 'react-native'
+import { Text, View, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native'
 import { addCardToDeck } from '../api';
-import { Button } from './Deck'
+import { styles, Button } from './Deck'
 import {CommonActions} from '@react-navigation/native';
 import { addCard } from '../actions';
 import { useDispatch } from 'react-redux';
@@ -27,7 +27,7 @@ export default function NewQuestion(props) {
   }
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView style={[styles.container, {justifyContent: 'space-around'}]}>
       <TextInput
         onChangeText={setQuestion}
         value={question}
@@ -38,7 +38,7 @@ export default function NewQuestion(props) {
         value={answer}
         placeholder="Answer"
       />
-      <Button text="Submit" onPress={() => handleSubmit()} />
-    </SafeAreaView>
+      <Button style={{width: '90%'}} text="Submit" onPress={() => handleSubmit()} />
+    </KeyboardAvoidingView>
   );
 }
