@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 import {CommonActions} from '@react-navigation/native';
+import { Button, styles } from './Deck'
+import { Card } from 'react-native-elements'
+import { purple, red } from '../colors';
 
 export default function Quiz(props) {
 
@@ -47,44 +50,39 @@ export default function Quiz(props) {
 
   if (quizComplete) {
     return (
-      <View>
-        <Text>Done. You got {correctCount}/{deck.questions.length} correct.</Text>
-        <TouchableOpacity onPress={() => reset()}>
-          <Text>
-            Restart Quiz
+      <View style={styles.container}>
+        <Card containerStyle={[styles.titleCard, {height: 400}]}>
+          <Card.Title style={{color: red}}>
+            Finished.
+          </Card.Title>
+          <Text style={[styles.center, {color: 'white', marginTop: 10, paddingBottom: 100, fontWeight: '200', fontSize: 20}]}>
+            You got {correctCount}/{deck.questions.length} correct.
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => goBack()}>
-          <Text>
-            Back to Deck
-          </Text>
-        </TouchableOpacity>
+          <Button style={{backgroundColor: red}} text="Restart Quiz" onPress={() => reset()} />
+          <Button text="Back To Deck" onPress={() => goBack()} />
+        </Card>
       </View>
     )
   } else {
     return (
-      <View>
-        <Text>Completed: {quizIndex}</Text>
-        {viewAnswer
-          ? <Answer
-            toggleAnswer={toggleAnswer}
-            text={deck.questions[quizIndex].answer}
-          />
-          : <Question
-            toggleAnswer={toggleAnswer}
-            text={deck.questions[quizIndex].question}
-          />
-        }
-        <TouchableOpacity onPress={() => correctAnswer()}>
-          <Text>
-            Correct
-            </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => incorrectAnswer()}>
-          <Text>
-            Incorrect
-            </Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <Card containerStyle={[styles.titleCard, {height: 400}]}>
+          <Card.Title style={{color: red}}>Completed: {quizIndex}</Card.Title>
+          {viewAnswer
+            ? <Answer
+              toggleAnswer={toggleAnswer}
+              text={deck.questions[quizIndex].answer}
+            />
+            : <Question
+              toggleAnswer={toggleAnswer}
+              text={deck.questions[quizIndex].question}
+            />
+          }
+          <View style={{justifyContent: 'flex-end'}}>
+            <Button text="Correct" onPress={() => correctAnswer()} />
+            <Button text="Incorrect" onPress={() => incorrectAnswer()} />
+          </View>
+        </Card>
       </View>
     )
   }
@@ -92,26 +90,30 @@ export default function Quiz(props) {
 
 const Question = ({ text, toggleAnswer }) => {
   return (
-    <View>
-      <Text>Question: {text}</Text>
-      <TouchableOpacity onPress={() => toggleAnswer(true)}>
-        <Text>
-          View Answer
-        </Text>
-      </TouchableOpacity>
+    <View style={{margin: 'auto'}}>
+      <Text style={[styles.center, {color: 'white', marginTop: 10, paddingBottom: 100, fontWeight: '200', fontSize: 20}]}>
+        {text}
+      </Text>
+      <Button 
+        style={{backgroundColor: purple}}
+        textStyle={{color: '#F0B7A4'}}
+        text="View Answer" 
+        onPress={() => toggleAnswer(true)} />
     </View>
   );
 }
 
 const Answer = ({ text, toggleAnswer }) => {
   return (
-    <View>
-      <Text>Answer: {text}</Text>
-      <TouchableOpacity onPress={() => toggleAnswer(false)}>
-        <Text>
-          View Question
-        </Text>
-      </TouchableOpacity>
+    <View style={{margin: 'auto'}}>
+      <Text style={[styles.center, {color: 'white', marginTop: 10, paddingBottom: 100, fontWeight: '200', fontSize: 20}]}>
+        {text}
+      </Text>
+      <Button 
+        style={{backgroundColor: purple}}
+        textStyle={{color: '#F0B7A4'}}
+        text="View Question" 
+        onPress={() => toggleAnswer(false)} />
     </View>
   );
 }
