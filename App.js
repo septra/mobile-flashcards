@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AsyncStorage, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackView } from '@react-navigation/stack';
@@ -17,8 +17,7 @@ import { blue, brown, purple, red, yellow } from './colors'
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
-
-const NOTIFICATION_KEY = 'mobile-flashcards:notifications'
+import { setLocalNotification } from './notifications';
 
 const RouteConfigs = {
   DeckList:{
@@ -32,7 +31,6 @@ const RouteConfigs = {
     options: {tabBarIcon: ({tintColor}) => <MaterialIcons name="create-new-folder" size={24} color={yellow} />, title: 'Add Deck'}
   },
 }
-
 
 const TabNavigatorConfig = {
   navigationOptions: {
@@ -72,6 +70,10 @@ const Stack = createStackNavigator()
 const store = createStore(reducer)
 
 export default function App() {
+  useEffect(() => {
+    setLocalNotification()
+  }, [])
+
   return (
     <NavigationContainer>
       <Provider store={store}>
