@@ -54,7 +54,7 @@ AsyncStorage.setItem('mobile-flashcards',
         }
       ]
     },
-    'Javascript': {
+    'JavaScript': {
       title: 'JavaScript',
       questions: [
         {
