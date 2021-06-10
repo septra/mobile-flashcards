@@ -66,16 +66,16 @@ export default function Quiz(props) {
   } else {
     return (
       <View style={styles.container}>
-        <Card containerStyle={[styles.titleCard, {height: 400}]}>
+        <Card containerStyle={[styles.titleCard]}>
           <Card.Title style={{color: red}}>Completed: {quizIndex}</Card.Title>
           {viewAnswer
             ? <Answer
               toggleAnswer={toggleAnswer}
-              text={deck.questions[quizIndex].answer}
+              text={deck && deck.questions[quizIndex].answer}
             />
             : <Question
               toggleAnswer={toggleAnswer}
-              text={deck.questions[quizIndex].question}
+              text={deck && deck.questions[quizIndex].question}
             />
           }
           <View style={{justifyContent: 'flex-end'}}>

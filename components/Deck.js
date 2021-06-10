@@ -63,7 +63,6 @@ export const styles = StyleSheet.create({
   },
   titleCard: {
     textAlign: 'center',
-    height: 300,
     width: '90%',
     borderRadius: 20,
     borderColor: purple,
