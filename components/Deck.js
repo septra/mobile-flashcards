@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Card, ListItem, Icon } from 'react-native-elements'
 import { useSelector } from 'react-redux'
+import { brown, purple, red, yellow } from '../colors'
 
 export default function Deck(props) {
   const { deck } = useSelector(decks => {
@@ -11,28 +13,38 @@ export default function Deck(props) {
   })
   return (
     <View style={styles.container}>
-      <Text style={{alignSelf:'center'}}>
-        {deck.title}
-      </Text>
-      <Text style={{alignSelf:'center'}}>
-        Total Cards: {deck.questions && deck.questions.length}
-      </Text>
-      <Button 
-        text="Start Quiz"
-        onPress={() => props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})} 
-      />
-      <Button 
-        text="Add Question" 
-        onPress={() => props.navigation.navigate('NewQuestion', {deckId: props.route.params.deckId})} 
-      />
+      <Card containerStyle={styles.titleCard}>
+        <Card.Title h3 h3Style={{color: yellow, fontWeight: '300'}}>
+          {deck.title && deck.title}
+        </Card.Title>
+        <Card.Divider/>
+        <Text style={[styles.center, {color: '#F0B7A4', margin: 30}]}>
+          {deck.questions && deck.questions.length} Questions
+        </Text>
+        <Button 
+          style={{backgroundColor: red}}
+          text="Start Quiz"
+          onPress={() => props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})} 
+        />
+        <Button 
+          text="Add Question" 
+          onPress={() => props.navigation.navigate('NewQuestion', {deckId: props.route.params.deckId})} 
+        />
+      </Card>
     </View>
   )
 }
 
-export function Button({ onPress, text }) {
+export function Button({ onPress, text, style }) {
     return (
         <TouchableOpacity
-            style={Platform.OS == 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+            style={[
+                Platform.OS === 'ios' 
+                ? styles.iosSubmitBtn 
+                : styles.androidSubmitBtn, 
+                {marginVertical: 10},
+                style
+            ]}
             onPress={onPress}
         >
             <Text style={styles.submitBtnText}>{text}</Text>
@@ -44,7 +56,26 @@ export function Button({ onPress, text }) {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
       padding: 20,
+      backgroundColor: brown
+  },
+  titleCard: {
+    textAlign: 'center',
+    height: 300,
+    width: '90%',
+    borderRadius: 20,
+    borderColor: purple,
+    backgroundColor: purple,
+    marginVertical: 40,
+    shadowColor: yellow,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowRadius: 9,
+    shadowOpacity: 1,
   },
   row: {
       flexDirection: 'row',
@@ -52,15 +83,13 @@ const styles = StyleSheet.create({
       alignItems: 'center'
   },
   iosSubmitBtn: {
-      // backgroundColor: purple,
-      padding: 10,
+      backgroundColor: yellow,
+      padding: 5,
       borderRadius: 7,
-      height: 45,
-      marginLeft: 40,
-      marginRight: 40,
+      margin: 5
   },
   androidSubmitBtn: {
-      // backgroundColor: purple,
+      backgroundColor: purple,
       padding: 10,
       paddingLeft: 30,
       paddingRight: 30,
@@ -72,13 +101,12 @@ const styles = StyleSheet.create({
   },
   submitBtnText: {
       // color: white,
-      fontSize: 22,
+      fontSize: 20,
+      fontWeight: '200',
       textAlign: 'center'
   },
   center: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      alignSelf: 'center',
       marginLeft: 30,
       marginRight: 30
   }
