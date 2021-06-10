@@ -30,6 +30,8 @@ Features
 2. Add unlimited number of questions to the existing decks and quiz yourself.
 3. The app will remind you if you haven't taken a quiz that day.
 
+![GIF](https://user-images.githubusercontent.com/5586070/121585772-97542280-ca50-11eb-9ace-140892b8280d.gif)
+
 License
 ----
 MIT
