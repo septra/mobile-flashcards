@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { Text, View, StyleSheet, TouchableOpacity, } from 'react-native'
 import { Card } from 'react-native-elements'
 import { useSelector } from 'react-redux'
 import { brown, purple, red, yellow } from '../colors'
@@ -24,7 +24,11 @@ export default function Deck(props) {
         <Button 
           style={{backgroundColor: red}}
           text="Start Quiz"
-          onPress={() => props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})} 
+          onPress={() => {
+            (deck && deck.questions.length === 0)
+              ? alert('Quiz has no questions')
+              : props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})
+          }}
         />
         <Button 
           text="Add Question" 
