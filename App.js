@@ -26,7 +26,7 @@ const RouteConfigs = {
   }, 
   AddDeck:{
     component: AddDeck,
-    name: "Add Deck",
+    name: "AddDeck",
     options: {tabBarIcon: ({tintColor}) => <MaterialIcons name="create-new-folder" size={24} color={yellow} />, title: 'Add Deck'}
   },
 }
@@ -49,7 +49,9 @@ const TabNavigatorConfig = {
       shadowRadius: 6,
       shadowOpacity: 1
     }
-  }
+  },
+  backBehaviour: 'initialRoute',
+  initialRouteName: 'DeckList'
 };
 
 const Tab = Platform.OS === 'ios'
