@@ -15,17 +15,19 @@ import reducer from './reducers'
 import { Provider } from 'react-redux';
 import { blue, brown, purple, red, yellow } from './colors'
 import Constants from 'expo-constants';
+import { Ionicons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 const RouteConfigs = {
   DeckList:{
     name: "DeckList",
     component: DeckList,
-    // options: {tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />, title: 'History'}
+    options: {tabBarIcon: ({tintColor}) => <Ionicons name='ios-file-tray-full-outline' size={24} color={yellow} />, title: 'Decks'}
   }, 
   AddDeck:{
     component: AddDeck,
     name: "Add Deck",
-    // options: {tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />, title: 'Add Entry'}
+    options: {tabBarIcon: ({tintColor}) => <MaterialIcons name="create-new-folder" size={24} color={yellow} />, title: 'Add Deck'}
   },
 }
 
