@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     backgroundColor: purple,
+    elevation: 10,
+    overflow: 'visible',
     shadowColor: yellow,
     shadowOffset: {
       width: 0,

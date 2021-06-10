@@ -100,15 +100,10 @@ export const styles = StyleSheet.create({
       margin: 5
   },
   androidSubmitBtn: {
-      backgroundColor: purple,
-      padding: 10,
-      paddingLeft: 30,
-      paddingRight: 30,
+      backgroundColor: yellow,
+      padding: 5,
       height: 45,
-      borderRadius: 2,
-      alignSelf: 'flex-end',
-      justifyContent: 'center',
-      alignItems: 'center'
+      borderRadius: 5,
   },
   submitBtnText: {
       // color: white,
