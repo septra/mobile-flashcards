@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Card, ListItem, Icon } from 'react-native-elements'
+import { Card } from 'react-native-elements'
 import { useSelector } from 'react-redux'
 import { brown, purple, red, yellow } from '../colors'
 
@@ -15,11 +15,11 @@ export default function Deck(props) {
     <View style={styles.container}>
       <Card containerStyle={styles.titleCard}>
         <Card.Title h3 h3Style={{color: yellow, fontWeight: '300'}}>
-          {deck.title && deck.title}
+          {deck && deck.title}
         </Card.Title>
         <Card.Divider/>
         <Text style={[styles.center, {color: '#F0B7A4', margin: 30}]}>
-          {deck.questions && deck.questions.length} Questions
+          {deck && deck.questions && deck.questions.length} Questions
         </Text>
         <Button 
           style={{backgroundColor: red}}
@@ -35,7 +35,7 @@ export default function Deck(props) {
   )
 }
 
-export function Button({ onPress, text, style }) {
+export function Button({ onPress, text, style, textStyle }) {
     return (
         <TouchableOpacity
             style={[
@@ -47,13 +47,13 @@ export function Button({ onPress, text, style }) {
             ]}
             onPress={onPress}
         >
-            <Text style={styles.submitBtnText}>{text}</Text>
+            <Text style={[styles.submitBtnText, textStyle]}>{text}</Text>
         </TouchableOpacity>
 
     )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
       flex: 1,
       justifyContent: 'flex-start',
