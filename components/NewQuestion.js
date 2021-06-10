@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Text, View, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native'
+import { Text, View, SafeAreaView, TextInput, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { addCardToDeck } from '../api';
 import { styles, Button } from './Deck'
 import {CommonActions} from '@react-navigation/native';
 import { addCard } from '../actions';
 import { useDispatch } from 'react-redux';
+import { brown, purple, red } from '../colors';
 
 export default function NewQuestion(props) {
   const [question, setQuestion] = useState("");
@@ -27,18 +28,33 @@ export default function NewQuestion(props) {
   }
 
   return (
-    <KeyboardAvoidingView style={[styles.container, {justifyContent: 'space-around'}]}>
+    <KeyboardAvoidingView style={[styles.container, {justifyContent: 'flex-start'}]}>
       <TextInput
         onChangeText={setQuestion}
         value={question}
         placeholder="Question"
+        style={localStyles.textInput}
       />
       <TextInput
         onChangeText={setAnswer}
         value={answer}
         placeholder="Answer"
+        style={localStyles.textInput}
       />
       <Button style={{width: '90%'}} text="Submit" onPress={() => handleSubmit()} />
     </KeyboardAvoidingView>
   );
 }
+
+const localStyles = StyleSheet.create({
+  textInput: {
+    marginVertical: 10, 
+    borderWidth: 1, 
+    padding: 5, 
+    borderColor: purple, 
+    borderRadius: 10, 
+    backgroundColor: red,
+    width: '90%', 
+    height: 40
+  }
+})
