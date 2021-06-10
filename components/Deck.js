@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, } from 'react-native'
 import { Card } from 'react-native-elements'
 import { useSelector } from 'react-redux'
 import { brown, purple, red, yellow } from '../colors'
+import { clearLocalNotification, setLocalNotification } from '../notifications'
 
 export default function Deck(props) {
   const { deck } = useSelector(decks => {
@@ -11,6 +12,17 @@ export default function Deck(props) {
       deck
     }
   })
+
+  const startQuiz = () => {
+    if (deck && deck.questions.length === 0) {
+      alert('Quiz has no questions')
+    } else {
+      clearLocalNotification()
+        .then(setLocalNotification)
+        .then(props.navigation.navigate('Quiz', {deckId: props.route.params.deckId}))
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.titleCard}>
@@ -24,11 +36,7 @@ export default function Deck(props) {
         <Button 
           style={{backgroundColor: red}}
           text="Start Quiz"
-          onPress={() => {
-            (deck && deck.questions.length === 0)
-              ? alert('Quiz has no questions')
-              : props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})
-          }}
+          onPress={() => startQuiz()}
         />
         <Button 
           text="Add Question" 
