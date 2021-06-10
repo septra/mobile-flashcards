@@ -66,6 +66,13 @@ const styles = StyleSheet.create({
     width: '90%',
     marginVertical: 10,
     backgroundColor: purple,
+    shadowColor: yellow,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1
   },
   deckHeading: {
     color: yellow,
