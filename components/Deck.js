@@ -17,8 +17,14 @@ export default function Deck(props) {
       <Text style={{alignSelf:'center'}}>
         Total Cards: {deck.questions && deck.questions.length}
       </Text>
-      <Button text="Start Quiz"></Button>
-      <Button text="Add Question" onPress={() => props.navigation.navigate('NewQuestion', {deckId: props.route.params.deckId})}></Button>
+      <Button 
+        text="Start Quiz"
+        onPress={() => props.navigation.navigate('Quiz', {deckId: props.route.params.deckId})} 
+      />
+      <Button 
+        text="Add Question" 
+        onPress={() => props.navigation.navigate('NewQuestion', {deckId: props.route.params.deckId})} 
+      />
     </View>
   )
 }
