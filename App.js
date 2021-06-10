@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackView } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,6 +13,8 @@ import NewQuestion from './components/NewQuestion';
 import { createStore } from 'redux';
 import reducer from './reducers'
 import { Provider } from 'react-redux';
+import { blue, brown, purple, red, yellow } from './colors'
+import Constants from 'expo-constants';
 
 const RouteConfigs = {
   DeckList:{
@@ -27,12 +29,33 @@ const RouteConfigs = {
   },
 }
 
+
+const TabNavigatorConfig = {
+  navigationOptions: {
+    header: null
+  },
+  tabBarOptions: {
+    activeTintColor: yellow,
+    style: {
+      // height: 56,
+      backgroundColor: blue,
+      shadowColor: "rgba(0, 0, 0, 0.24)",
+      shadowOffset: {
+        width: 0,
+        height: 3
+      },
+      shadowRadius: 6,
+      shadowOpacity: 1
+    }
+  }
+};
+
 const Tab = Platform.OS === 'ios'
           ? createBottomTabNavigator() 
           : createMaterialTopTabNavigator()
 
 const Tabs = ({navigation}) => {
-  return <Tab.Navigator>
+  return <Tab.Navigator {...TabNavigatorConfig}>
       <Tab.Screen {...RouteConfigs['DeckList']} />
       <Tab.Screen {...RouteConfigs['AddDeck']} />
   </Tab.Navigator>
@@ -46,38 +69,41 @@ export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <StatusBar />
-        <Stack.Navigator
-          initialRouteName="Decks"
-          headerMode="screen"
-        >
-          <Stack.Screen
-            name="Decks"
-            component={Tabs}
-          />
-          <Stack.Screen
-            name="Deck"
-            component={Deck}
-          />
-          <Stack.Screen
-            name="NewQuestion"
-            component={NewQuestion}
-          />
-          <Stack.Screen
-            name="Quiz"
-            component={Quiz}
-          />
-        </Stack.Navigator>
+        <View style={{flex: 1}} >
+          {/* <StatusBar backgroundColor='black' barStyle='light-content'/> */}
+          <View style={{backgroundColor: blue, height: Constants.statusBarHeight}}>
+            <StatusBar translucent backgroundColor={red} barStyle="light-content" />
+          </View>
+          <Stack.Navigator
+            initialRouteName="Decks"
+            headerMode="screen"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: blue,
+              },
+              headerTintColor: '#fff',
+            }}
+          >
+            <Stack.Screen
+              name="Decks"
+              component={Tabs}
+            />
+            <Stack.Screen
+              name="Deck"
+              component={Deck}
+            />
+            <Stack.Screen
+              name="NewQuestion"
+              component={NewQuestion}
+            />
+            <Stack.Screen
+              name="Quiz"
+              component={Quiz}
+            />
+          </Stack.Navigator>
+        </View>
       </Provider>
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
