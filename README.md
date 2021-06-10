@@ -36,4 +36,4 @@ MIT
 
 Contributing
 ---
-This is an application that I build for my own personal learning. Feel free to use it in whatever way you like. Any contributions are welcome!
+This is an application that I built for my own personal learning. Feel free to use it in whatever way you like. Any contributions are welcome!
