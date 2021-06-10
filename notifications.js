@@ -54,7 +54,7 @@ export function setLocalNotification () {
                           content: createNotification(),
                           trigger: {
                               hour: tomorrow.getHours(),
-                              minutes: tomorrow.getMinutes(),
+                              minute: tomorrow.getMinutes(),
                               repeats: true
                           }
                       })
