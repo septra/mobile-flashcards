@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackView } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,6 +17,8 @@ import { blue, brown, purple, red, yellow } from './colors'
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+
+const NOTIFICATION_KEY = 'mobile-flashcards:notifications'
 
 const RouteConfigs = {
   DeckList:{
@@ -111,3 +113,64 @@ export default function App() {
   );
 }
 
+export function clearLocalNotification () {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+      .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+function createNotification () {
+  return {
+      title: "Flashcards - Study Reminder",
+      body: "Hi! Don't forget to study today!",
+      ios: {
+          sound: true,
+      },
+      android: {
+          sound: true,
+          priority: 'high',
+          sticky: false,
+          vibrate: true
+      }
+  }
+}
+
+export function setLocalNotification () {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+      .then(JSON.parse)
+      .then((data) => {
+          if (data === null) {
+              Notifications.requestPermissionsAsync({
+                  ios: {
+                    allowAlert: true,
+                    allowBadge: true,
+                    allowSound: true,
+                    allowAnnouncements: true,
+                  },
+                  android: {
+
+                  }
+              })
+              .then(({status}) => {
+                  if (status === 'granted') {
+                      Notifications.cancelAllScheduledNotificationsAsync()
+
+                      let today = new Date()
+                      today.setDate(today.getDate())
+                      today.setHours(20)
+                      today.setMinutes(0)
+                      today.setSeconds(0)
+
+                      Notifications.scheduleNotificationAsync({
+                          content: createNotification(),
+                          trigger: {
+                              hour: today.getHours(),
+                              minutes: today.getMinutes(),
+                              repeats: true
+                          }
+                      })
+                      AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+                  }
+              })
+          }
+      })
+}
