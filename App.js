@@ -9,6 +9,9 @@ import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import Deck from './components/Deck';
 import NewQuestion from './components/NewQuestion';
+import { createStore } from 'redux';
+import reducer from './reducers'
+import { Provider } from 'react-redux';
 
 const RouteConfigs = {
   DeckList:{
@@ -36,27 +39,31 @@ const Tabs = ({navigation}) => {
 
 const Stack = createStackNavigator()
 
+const store = createStore(reducer)
+
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar />
-      <Stack.Navigator
-        initialRouteName="Decks"
-        headerMode="screen"
-      >
-        <Stack.Screen
-          name="Decks"
-          component={Tabs}
-        />
-        <Stack.Screen
-          name="Deck"
-          component={Deck}
-        />
-        <Stack.Screen
-          name="NewQuestion"
-          component={NewQuestion}
-        />
-      </Stack.Navigator>
+      <Provider store={store}>
+        <StatusBar />
+        <Stack.Navigator
+          initialRouteName="Decks"
+          headerMode="screen"
+        >
+          <Stack.Screen
+            name="Decks"
+            component={Tabs}
+          />
+          <Stack.Screen
+            name="Deck"
+            component={Deck}
+          />
+          <Stack.Screen
+            name="NewQuestion"
+            component={NewQuestion}
+          />
+        </Stack.Navigator>
+      </Provider>
     </NavigationContainer>
   );
 }
