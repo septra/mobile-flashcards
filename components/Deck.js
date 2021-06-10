@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage, ShadowPropTypesIOS } from 'react-native'
-import { useIsFocused } from '@react-navigation/native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { useSelector } from 'react-redux'
 
 export default function Deck(props) {
-  const isFocussed = useIsFocused()
-  const [deck, setDeck] = useState({})
-  useEffect(() => {
-    AsyncStorage.getItem('mobile-flashcards')
-      .then(JSON.parse)
-      .then((data) => {
-        setDeck(data[props.route.params.deckId])
-      })
-  }, [isFocussed])
+  const { deck } = useSelector(decks => {
+    const deck = decks[props.route.params.deckId]
+    return {
+      deck
+    }
+  })
   return (
     <View style={styles.container}>
       <Text style={{alignSelf:'center'}}>
