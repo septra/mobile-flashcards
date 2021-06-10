@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDecks } from '../api'
+import { receiveDecks } from '../actions'
 
 export default function DeckList(props) {
-  const [decks, setDecks] = useState({})
+  const decks = useSelector(state => {
+    return state
+  })
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getDecks()
-      .then((data) => {
-        setDecks(data)
+      .then((decks) => {
+        dispatch(receiveDecks(decks))
       })
   }, [])
 
