@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, SafeAreaView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDecks } from '../api'
 import { receiveDecks } from '../actions'
@@ -18,44 +18,37 @@ export default function DeckList(props) {
       })
   }, [])
 
-  return (
-    <View style={styles.container}>
-      {Object.keys(decks).map((deckName) => {
-        const deck = decks[deckName]
-        return (
-          <DeckListItem 
-            key={deck.title}
-            deck={deck}
-            linkTo={() => props.navigation.navigate('Deck', {deckId: deck.title})}
-          />
-        )
-      })
-      }
-    </View>
-  )
-}
-
-function DeckListItem({ deck, linkTo }) {
-  return (
-    <TouchableOpacity 
-      style={styles.item} 
-      onPress={linkTo}
-    >
+  const renderItem = ({item}) => {
+    const deck = item
+    return (
+      <TouchableOpacity 
+        style={styles.item} 
+        onPress={() => props.navigation.navigate('Deck', {deckId: deck.title})}
+      >
         <Text style={styles.deckHeading}>{deck.title}</Text>
         <Text style={styles.deckDetail}>Questions: {deck.questions.length}</Text>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={Object.values(decks)}
+        renderItem={renderItem}
+        keyExtractor={item => item.title}
+      />
+    </SafeAreaView>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: brown
   },
   item: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
@@ -65,6 +58,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: '90%',
     marginVertical: 10,
+    marginHorizontal: 20,
     backgroundColor: purple,
     shadowColor: yellow,
     shadowOffset: {
