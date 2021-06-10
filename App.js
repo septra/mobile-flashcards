@@ -8,6 +8,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import Deck from './components/Deck';
+import Quiz from './components/Quiz';
 import NewQuestion from './components/NewQuestion';
 import { createStore } from 'redux';
 import reducer from './reducers'
@@ -61,6 +62,10 @@ export default function App() {
           <Stack.Screen
             name="NewQuestion"
             component={NewQuestion}
+          />
+          <Stack.Screen
+            name="Quiz"
+            component={Quiz}
           />
         </Stack.Navigator>
       </Provider>
