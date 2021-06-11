@@ -5,6 +5,7 @@ import {CommonActions} from '@react-navigation/native';
 import { Button, styles } from './Deck'
 import { Card } from 'react-native-elements'
 import { purple, red } from '../colors';
+import { clearLocalNotification, setLocalNotification } from '../notifications';
 
 export default function Quiz(props) {
 
@@ -15,7 +16,7 @@ export default function Quiz(props) {
 
   const nextQuestion = () => {
     quizIndex === deck.questions.length - 1
-      ? setQuizComplete(true)
+      ? completeQuiz()
       : setQuizIndex(quizIndex + 1)
   }
 
@@ -33,6 +34,12 @@ export default function Quiz(props) {
     setQuizIndex(0)
     setCorrectCount(0)
     setQuizComplete(false)
+  }
+
+  const completeQuiz = () => {
+    setQuizComplete(true)
+    clearLocalNotification() 
+      .then(setLocalNotification)
   }
 
   const goBack = () => {
