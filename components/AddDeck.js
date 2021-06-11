@@ -12,12 +12,16 @@ export default function AddDeck(props) {
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
-    saveDeckTitle(title)
-      .then(() => {
-        dispatch(addDeck(title))
-      })
-    setTitle('')
-    props.navigation.navigate('Deck', {deckId: title})
+    if (title === '') {
+      alert('Please enter a deck name.')
+    } else {
+      saveDeckTitle(title)
+        .then(() => {
+          dispatch(addDeck(title))
+        })
+      setTitle('')
+      props.navigation.navigate('Deck', {deckId: title})
+    }
   }
 
   return (
