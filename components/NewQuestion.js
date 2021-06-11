@@ -13,18 +13,22 @@ export default function NewQuestion(props) {
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
-    const card = {
-      question,
-      answer
+    if (question === '' || answer === '') {
+      alert('Please provide a question and an answer')
+    } else {
+      const card = {
+        question,
+        answer
+      }
+      const title = props.route.params.deckId
+      addCardToDeck(title, card)
+        .then(() => {
+          dispatch(addCard(title, card))
+        })
+      props.navigation.dispatch(CommonActions.goBack({
+        key: 'Deck'
+      }))
     }
-    const title = props.route.params.deckId
-    addCardToDeck(title, card)
-      .then(() => {
-        dispatch(addCard(title, card))
-      })
-    props.navigation.dispatch(CommonActions.goBack({
-      key: 'Deck'
-    }))
   }
 
   return (
