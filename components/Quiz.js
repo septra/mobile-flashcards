@@ -67,7 +67,9 @@ export default function Quiz(props) {
     return (
       <View style={styles.container}>
         <Card containerStyle={[styles.titleCard]}>
-          <Card.Title style={{color: red}}>Completed: {quizIndex}</Card.Title>
+          <Card.Title style={{color: red}}>
+            Completed: {quizIndex} of {deck && deck.questions.length}
+          </Card.Title>
           {viewAnswer
             ? <Answer
               toggleAnswer={toggleAnswer}
